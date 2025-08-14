@@ -1,42 +1,68 @@
 # 💰 Sim-Invest – Simulador Completo de Investimentos Brasileiros
 
-Sim-Invest é uma aplicação web interativa feita com 💚 para ajudar brasileiros a comparar, simular e aprender sobre os principais tipos de investimento disponíveis no mercado nacional. Aqui, você pode visualizar seu potencial de rentabilidade em diferentes produtos, ajustar seu perfil de risco e ver o impacto real dos impostos (IR e IOF) de forma simples e realista.
+**Sim-Invest** é uma aplicação web responsiva (PWA) feita para ajudar brasileiros a **comparar, simular e aprender** sobre os principais tipos de investimento do mercado nacional.  
+Com cálculos realistas de rentabilidade, IR e IOF, análise de risco, gráficos interativos e recomendações personalizadas por perfil de investidor.
 
 ---
 
-## Principais Destaques
+## 🚀 Principais Destaques
 
-- **23 tipos de investimento**: CDB, CDI, Tesouro, LCI/LCA, CRI/CRA, Poupança, ações, FIIs, fundos, e fintechs populares (Nubank, Mercado Pago, Inter, etc).
-- **Simulação precisa**: aporte inicial e mensal formatados em R$, prazo, taxas personalizáveis.
-- **Comparativo visual**: gráficos dinâmicos da evolução do patrimônio, rankings por rentabilidade (geral e por perfil de risco).
-- **Análise de risco e perfil do investidor**: escolha entre conservador, moderado ou arrojado para ver a melhor opção adaptada a você.
-- **Tributação realista**: cálculos automáticos e detalhados de IR regressivo, IOF, e identificação de investimentos isentos.
-- **Interface leve e responsiva**: experiência fluida em desktop e dispositivos móveis (PWA).
-- **Rodapé fofo**: “Feito com ❤️ para te ajudar a investir”.
-
----
-
-## Como Usar
-
-1. Acesse o site ou clone o projeto localmente.
-2. Selecione seu perfil de investidor.
-3. Informe aportes inicial e mensal no formato R$ 10.000,00.
-4. Escolha o tipo de investimento ou compare todos.
-5. Clique em "Simular" e analise os resultados nos gráficos, tabelas e cards de melhores opções.
-6. Veja qual investimento oferece maior retorno bruto e qual é ideal para o seu perfil de risco.
-
----
-
-## Tecnologias
-
-- HTML5, CSS3, JavaScript ES6
-- Chart.js para visualização gráfica
-- Progressive Web App (PWA) para uso offline e instalação no celular
-- Totalmente client-side, sem necessidade de backend
+- **23 tipos de investimentos**:
+  - Renda Fixa Tradicional
+  - Produtos de Fintechs/Bancos Digitais
+  - Investimentos Isentos
+  - Renda Variável (Ações e FIIs)
+  - Fundos (DI, Multimercado, Ações)
+- **Simulação precisa**:
+  - Aporte inicial e mensal formatados em R$ (ex: `R$ 10.000,00`)
+  - Ajuste de prazo e taxas
+- **Comparativo visual**:
+  - Gráficos de evolução
+  - Ranking de "Melhor Opção Geral" (sempre maior rentabilidade absoluta)
+  - Ranking de "Melhor Opção para o Seu Perfil"
+- **Análise de risco e perfil do investidor**:
+  - Perfis: Conservador, Moderado e Arrojado
+  - Grau de risco indicado em cores e ícones
+- **Tributação realista**:
+  - IR regressivo conforme prazo
+  - IOF para investimentos resgatados em até 30 dias
+  - Identificação automática de produtos isentos
+- **Interface leve e responsiva**:
+  - Funciona no celular, tablet ou computador
+  - Instalação como aplicativo (PWA)
+- **Rodapé amigável**:
+  - "Feito com ❤️ para te ajudar a investir"
 
 ---
 
-## Estrutura do Projeto
+## 📖 Como Usar
+
+1. **Acesse o site** ou clone o projeto localmente.
+2. Escolha seu **perfil de investidor**.
+3. Informe:
+   - **Aporte inicial** (ex: `R$ 10.000,00`)
+   - **Aporte mensal** (ex: `R$ 1.000,00`)
+4. Clique em **"Simular"**.
+5. Analise:
+   - Melhor Opção Geral
+   - Melhor Opção para seu perfil
+   - Gráficos de evolução e rankings
+   - Tributação aplicada (IR e IOF)
+
+---
+
+## 🛠 Tecnologias Utilizadas
+
+- **HTML5** – Estrutura
+- **CSS3** – Estilo e responsividade
+- **JavaScript ES6** – Lógica e cálculos
+- **Chart.js** – Gráficos interativos
+- **Progressive Web App (PWA)** – Instalação como app e uso offline
+- **Totalmente client-side**, sem backend
+
+---
+
+## 📂 Estrutura do Projeto
 
 sim-invest/
 ├── index.html # Interface principal
@@ -44,12 +70,30 @@ sim-invest/
 ├── app.js # Lógica completa e cálculos financeiros
 └── README.md # Documentação - você está aqui!
 
+
 ---
 
-## Nota do Desenvolvedor
+## 🤝 Contribuição
 
-Desenvolvido com 💚 para te ajudar a investir melhor.
+Contribuições são bem-vindas!  
+Para contribuir:
+1. Faça um fork do projeto
+2. Crie uma branch para sua feature (`git checkout -b minha-feature`)
+3. Commit suas alterações (`git commit -m 'Nova funcionalidade'`)
+4. Envie para o seu fork (`git push origin minha-feature`)
+5. Abra um Pull Request
+
 ---
 
-**Explore, simule, compare e aprenda!**  
-**Bons investimentos! 🚀**
+## 📜 Licença
+
+Este projeto está licenciado sob a [MIT License](LICENSE).
+
+---
+
+## ✍️ Nota do Desenvolvedor
+
+Desenvolvido com dedicação para ajudar você a investir melhor.  
+Esperamos que supere suas expectativas!
+
+**Feito com ❤️ para te ajudar a investir**

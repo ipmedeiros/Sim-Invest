@@ -36,7 +36,7 @@ Sim-Invest é uma aplicação web interativa feita com 💚 para ajudar brasilei
 
 ---
 
-## Estr
+## Estrutura do Projeto
 
 sim-invest/
 ├── index.html # Interface principal

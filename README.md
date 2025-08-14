@@ -57,7 +57,6 @@ Com cálculos realistas de rentabilidade, IR e IOF, análise de risco, gráficos
 - **CSS3** – Estilo e responsividade
 - **JavaScript ES6** – Lógica e cálculos
 - **Chart.js** – Gráficos interativos
-- **Progressive Web App (PWA)** – Instalação como app e uso offline
 - **Totalmente client-side**, sem backend
 
 ---
@@ -81,12 +80,6 @@ Para contribuir:
 3. Commit suas alterações (`git commit -m 'Nova funcionalidade'`)
 4. Envie para o seu fork (`git push origin minha-feature`)
 5. Abra um Pull Request
-
----
-
-## 📜 Licença
-
-Este projeto está licenciado sob a [MIT License](LICENSE).
 
 ---
 

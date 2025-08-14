@@ -65,11 +65,10 @@ Com cálculos realistas de rentabilidade, IR e IOF, análise de risco, gráficos
 ## 📂 Estrutura do Projeto
 
 sim-invest/
--├── index.html # Interface principal
--├── style.css # Estilos responsivos e harmoniosos
--├── app.js # Lógica completa e cálculos financeiros
--└── README.md # Documentação - você está aqui!
-
+├── index.html        # Interface principal
+├── style.css         # Estilos responsivos e harmoniosos
+├── app.js            # Lógica completa e cálculos financeiros
+└── README.md         # Documentação - você está aqui!
 
 ---
 

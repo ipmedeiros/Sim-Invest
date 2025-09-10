@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sim-Invest - Simulador de Investimentos com IR e IOF</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Cabeçalho / Menu de Navegação -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <h1>Sim-Invest</h1>
+                <span class="navbar-subtitle">Simulador Completo com IR e IOF - Brasil 2025</span>
+            </div>
+            <!-- Botões para trocar entre abas de simulação -->
+            <div class="navbar-tabs">
+                <button class="tab-btn active" data-tab="individual">Simulação Individual</button>
+                <button class="tab-btn" data-tab="comparative">Comparativo Completo</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Conteúdo Principal -->
+    <main class="container">
+        <!-- Aba: Simulação Individual -->
+        <section id="individual-tab" class="tab-content active">
+            <div class="section-header">
+                <h2>Simulação Individual</h2>
+                <p>Simule um tipo específico de investimento considerando IR, IOF e perfil de risco</p>
+            </div>
+
+            <!-- Formulário da simulação individual -->
+            <div class="form-card card">
+                <div class="card__body">
+                    <form id="individual-form">
+                        <!-- Primeira linha: Aporte inicial e mensal -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="individual-initial">
+                                    Aporte Inicial
+                                    <span class="tooltip" title="Valor inicial que você pretende investir">ⓘ</span>
+                                </label>
+                                <input type="text" id="individual-initial" class="form-control currency-input" placeholder="R$ 10.000,00" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="individual-monthly">
+                                    Aporte Mensal
+                                    <span class="tooltip" title="Valor que você pretende investir mensalmente">ⓘ</span>
+                                </label>
+                                <input type="text" id="individual-monthly" class="form-control currency-input" placeholder="R$ 1.000,00" required>
+                            </div>
+                        </div>
+                        <!-- Segunda linha: Prazo e tipo de investimento -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="individual-period">
+                                    Prazo (anos)
+                                    <span class="tooltip" title="Por quantos anos você pretende manter o investimento">ⓘ</span>
+                                </label>
+                                <input type="number" id="individual-period" class="form-control" min="1" max="50" placeholder="5" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="individual-type">
+                                    Tipo de Investimento
+                                    <span class="tooltip" title="Cada tipo tem tributação específica - Lista completa 2025">ⓘ</span>
+                                </label>
+                                <select id="individual-type" class="form-control" required>
+                                    <option value="">Selecione um tipo</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Campo da taxa anual -->
+                        <div class="form-group">
+                            <label class="form-label" for="individual-rate" id="individual-rate-label">
+                                Taxa (% ao ano)
+                            </label>
+                            <input type="number" id="individual-rate" class="form-control" step="0.01" placeholder="12,00" required>
+                        </div>
+                        
+                        <!-- Painel com informações do investimento (risco e impostos) -->
+                        <div id="investment-info" class="investment-info-panel hidden">
+                            <div class="risk-info">
+                                <div class="risk-indicator">
+                                    <span class="risk-badge" id="risk-badge">Baixo</span>
+                                    <span class="risk-description" id="risk-description">Baixo risco, retorno previsível</span>
+                                </div>
+                            </div>
+                            <div class="tax-details">
+                                <div class="tax-item">
+                                    <span class="tax-label">Imposto de Renda:</span>
+                                    <span id="ir-info" class="tax-value">-</span>
+                                </div>
+                                <div class="tax-item">
+                                    <span class="tax-label">IOF:</span>
+                                    <span id="iof-info" class="tax-value">-</span>
+                                </div>
+                            </div>
+                            <div class="tax-note">
+                                <small>💡 Valores calculados automaticamente sobre os rendimentos</small>
+                            </div>
+                        </div>
+                        
+                        <!-- Botão para rodar a simulação -->
+                        <button type="submit" class="btn btn--primary btn--full-width">
+                            🔄 Simular Investimento
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Resultados da simulação individual -->
+            <div id="individual-results" class="results-section hidden">
+                <!-- Indicadores principais (KPIs) -->
+                <div class="kpis-grid">
+                    <div class="kpi-card card">
+                        <div class="card__body">
+                            <div class="kpi-label">Total Investido</div>
+                            <div class="kpi-value kpi-value--neutral" id="individual-total-invested">R$ 0,00</div>
+                        </div>
+                    </div>
+                    <div class="kpi-card card">
+                        <div class="card__body">
+                            <div class="kpi-label">Montante Líquido</div>
+                            <div class="kpi-value" id="individual-final-amount">R$ 0,00</div>
+                        </div>
+                    </div>
+                    <div class="kpi-card card">
+                        <div class="card__body">
+                            <div class="kpi-label">Rentabilidade Líquida</div>
+                            <div class="kpi-value" id="individual-yield">0,00%</div>
+                        </div>
+                    </div>
+                    <div class="kpi-card card">
+                        <div class="card__body">
+                            <div class="kpi-label">Impostos Pagos</div>
+                            <div class="kpi-value kpi-value--negative" id="individual-taxes">R$ 0,00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resultados detalhados em tabela e gráfico -->
+                <div class="results-grid">
+                    <div class="table-card card">
+                        <div class="card__body">
+                            <h3>Evolução Ano a Ano</h3>
+                            <div class="table-container">
+                                <table id="individual-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Ano</th>
+                                            <th>Aportes</th>
+                                            <th>Rendimento</th>
+                                            <th>Saldo Líquido</th>
+                                            <th>Impostos</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-card card">
+                        <div class="card__body">
+                            <h3>Gráfico de Evolução Líquida</h3>
+                            <div class="chart-container" style="position: relative; height: 400px;">
+                                <canvas id="individual-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Aba: Comparativo entre investimentos -->
+        <section id="comparative-tab" class="tab-content">
+            <div class="section-header">
+                <h2>Comparativo Completo</h2>
+                <p>Compare todos os investimentos por perfil de risco e tributação líquida</p>
+            </div>
+
+            <!-- Formulário do comparativo -->
+            <div class="form-card card">
+                <div class="card__body">
+                    <form id="comparative-form">
+                        <!-- Primeira linha: Aporte inicial e mensal -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="comparative-initial">
+                                    Aporte Inicial
+                                    <span class="tooltip" title="Valor inicial para comparação">ⓘ</span>
+                                </label>
+                                <input type="text" id="comparative-initial" class="form-control currency-input" placeholder="R$ 10.000,00" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="comparative-monthly">
+                                    Aporte Mensal
+                                    <span class="tooltip" title="Valor mensal para comparação">ⓘ</span>
+                                </label>
+                                <input type="text" id="comparative-monthly" class="form-control currency-input" placeholder="R$ 1.000,00" required>
+                            </div>
+                        </div>
+                        <!-- Segunda linha: Prazo e perfil do investidor -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label class="form-label" for="comparative-period">
+                                    Prazo (anos)
+                                    <span class="tooltip" title="Prazo para comparação de todos os investimentos">ⓘ</span>
+                                </label>
+                                <input type="number" id="comparative-period" class="form-control" min="1" max="50" placeholder="5" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label" for="investor-profile">
+                                    Perfil do Investidor
+                                    <span class="tooltip" title="Seu perfil determina quais investimentos são recomendados">ⓘ</span>
+                                </label>
+                                <select id="investor-profile" class="form-control" required>
+                                    <option value="">Selecione seu perfil</option>
+                                    <option value="conservador">Conservador - Prioriza segurança</option>
+                                    <option value="moderado">Moderado - Equilíbrio risco/retorno</option>
+                                    <option value="arrojado">Arrojado - Aceita alto risco</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Botão para rodar o comparativo -->
+                        <button type="submit" class="btn btn--primary btn--full-width">
+                            🔄 Comparar Investimentos por Perfil
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Resultados do comparativo -->
+            <div id="comparative-results" class="results-section hidden">
+                <!-- Destaques com as melhores opções -->
+                <div class="best-options-grid">
+                    <div class="best-option-card card">
+                        <div class="card__body">
+                            <div class="best-option-header">
+                                <h3>🏆 MELHOR OPÇÃO GERAL</h3>
+                                <span class="fixed-badge">FIXA</span>
+                            </div>
+                            <div class="best-option-content">
+                                <div class="best-option-name" id="best-general-name">-</div>
+                                <div class="best-option-value" id="best-general-value">R$ 0,00</div>
+                                <div class="best-option-subtitle">Maior rentabilidade líquida absoluta</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="best-option-card card profile-card">
+                        <div class="card__body">
+                            <div class="best-option-header">
+                                <h3>⭐ MELHOR PARA SEU PERFIL</h3>
+                                <span class="dynamic-badge">ATUALIZA</span>
+                            </div>
+                            <div class="best-option-content">
+                                <div class="best-option-name" id="best-profile-name">Selecione um perfil</div>
+                                <div class="best-option-value" id="best-profile-value">R$ 0,00</div>
+                                <div class="best-option-subtitle" id="profile-description">Compatível com seu perfil de risco</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Filtros para controlar exibição dos resultados -->
+                <div class="filter-controls card">
+                    <div class="card__body">
+                        <div class="filter-header">
+                            <h4>🔍 Filtrar Resultados</h4>
+                        </div>
+                        <div class="filter-buttons">
+                            <button class="btn btn--secondary filter-btn active" data-filter="all">
+                                Todos os Investimentos
+                            </button>
+                            <button class="btn btn--secondary filter-btn" data-filter="profile" id="profile-filter-btn">
+                                Para Meu Perfil
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resumo das categorias de investimento analisadas -->
+                <div class="categories-summary">
+                    <div class="category-info">
+                        <h4>📈 Categorias Analisadas:</h4>
+                        <div class="category-tags">
+                            <span class="category-tag category-tag--renda-fixa">🏦 Renda Fixa Tradicional</span>
+                            <span class="category-tag category-tag--fintechs">📱 Fintechs / Bancos Digitais</span>
+                            <span class="category-tag category-tag--isento">🌱 Isentos de IR</span>
+                            <span class="category-tag category-tag--renda-variavel">📈 Renda Variável</span>
+                            <span class="category-tag category-tag--fundos">💼 Fundos de Investimento</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resultados detalhados em tabela e gráficos -->
+                <div class="results-grid">
+                    <div class="table-card card">
+                        <div class="card__body">
+                            <div class="table-header">
+                                <h3 id="table-title">Ranking por Rentabilidade Líquida</h3>
+                                <div class="table-actions">
+                                    <span class="results-count" id="results-count">22 investimentos</span>
+                                    <button class="btn btn--secondary btn--sm" id="export-csv">
+                                        📋 Exportar CSV
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="table-container">
+                                <table id="comparative-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Posição</th>
+                                            <th>Investimento</th>
+                                            <th>Risco</th>
+                                            <th>Montante Líquido</th>
+                                            <th>Rentabilidade</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart-card card">
+                        <div class="card__body">
+                            <h3 id="chart-title">Top 10 - Montantes Líquidos</h3>
+                            <div class="chart-container" style="position: relative; height: 400px;">
+                                <canvas id="comparative-bar-chart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gráfico de evolução temporal dos principais investimentos -->
+                <div class="chart-card card">
+                    <div class="card__body">
+                        <h3 id="line-chart-title">Evolução Temporal Líquida (Top 8)</h3>
+                        <div class="chart-container" style="position: relative; height: 400px;">
+                            <canvas id="comparative-line-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Avisos rápidos (notificações tipo toast) -->
+    <div id="toast" class="toast hidden">
+        <div class="toast-content">
+            <span id="toast-message"></span>
+        </div>
+    </div>
+
+    <!-- Rodapé institucional -->
+    <footer class="footer">
+        <div class="container">
+            <p>💡 Simulador de Investimentos com dados realistas para 2025. Cálculos baseados na legislação tributária vigente.</p>
+            <p><small>⚠️ Este simulador é apenas educativo. Consulte sempre um consultor financeiro qualificado.</small></p>
+        </div>
+    </footer>
+
+    <!-- Rodapé final personalizado -->
+    <footer style="text-align: center; padding: 20px; color: #666;">
+        Feito com ❤️ para te ajudar a investir
+    </footer>
+
+    <!-- Script principal da aplicação -->
+    <script src="app.js"></script>
+</body>
+</html>

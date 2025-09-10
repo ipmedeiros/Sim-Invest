@@ -1,6 +1,7 @@
 /*
+  /*
   Sim-Invest
-  Desenvolvido com amor para me ajudar a investir
+  Desenvolvido por Isabella Pereira (Bells) - 2025 - Open Source
 */
 
 // Simulador de Investimentos com Cálculos de Impostos e Perfis de Risco
